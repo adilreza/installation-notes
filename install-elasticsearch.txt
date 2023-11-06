@@ -7,4 +7,5 @@ sudo apt-get update
 sudo apt install elasticsearch 
 sudo systemctl enable elasticsearch 
 sudo systemctl start elasticsearch 
+sudo nano /etc/elasticsearch/elasticsearch.yml 
 curl -X GET "localhost:9200/" 
