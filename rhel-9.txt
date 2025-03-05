@@ -1,0 +1,8 @@
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+sudo dnf upgrade
+
+sudo firewall-cmd --permanent --add-port={80,443}/tcp
+sudo firewall-cmd --reload
+
+sudo certbot certonly --standalone -d $DOMAIN --preferred-challenges http --agree-tos  -m $EMAIL --keep-until-expiring
+
