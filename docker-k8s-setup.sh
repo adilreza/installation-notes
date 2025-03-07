@@ -45,6 +45,11 @@ sudo dnf install containerd.io -y && log_success "containerd installed"
 containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
 sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml && log_success "Configured containerd to use SystemdCgroup"
 
+# Enable and restart containerd
+sudo systemctl enable --now containerd && log_success "containerd enabled and started"
+sudo systemctl restart containerd && log_success "containerd restarted"
+sudo systemctl status containerd --no-pager || log_error "containerd failed to start"
+
 # Load necessary kernel modules
 sudo tee /etc/modules-load.d/containerd.conf <<EOF
 overlay
@@ -75,8 +80,15 @@ log_success "Kubernetes repository added"
 # Install Kubernetes tools
 sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes && log_success "Kubernetes components installed"
 
+# Enable and restart kubelet
+sudo systemctl enable --now kubelet && log_success "kubelet enabled and started"
+sudo systemctl restart kubelet && log_success "kubelet restarted"
+sudo systemctl status kubelet --no-pager || log_error "kubelet failed to start"
+
 # Check versions
 kubeadm version && log_success "kubeadm version checked"
 kubectl version --client && log_success "kubectl version checked"
 
 log_success "Script execution completed successfully"
+
+# sudo kubeadm init --control-plane-endpoint "192.168.0.196:6443" --upload-certs --pod-network-cidr=10.244.0.0/16"
