@@ -91,4 +91,4 @@ kubectl version --client && log_success "kubectl version checked"
 
 log_success "Script execution completed successfully"
 
-# sudo kubeadm init --control-plane-endpoint "192.168.0.196:6443" --upload-certs --pod-network-cidr=10.244.0.0/16"
+# sudo kubeadm init --control-plane-endpoint="192.168.0.196:6443" --upload-certs --pod-network-cidr=10.244.0.0/16"
